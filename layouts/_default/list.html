@@ -1,0 +1,25 @@
+{{ define "main" }}
+    <h1>{{ .Title }}</h1>
+
+    <div class="grid">
+        {{ $paginator := .Paginate (where .Pages "Section" "posts") 24 }}
+        {{ range $paginator.Pages }}
+            <div class="card">
+                <a href="{{ .Permalink }}">
+                    <img src="https://img.youtube.com/vi/{{ .Params.video_id }}/mqdefault.jpg" alt="{{ .Title }}">
+                    <h3>{{ .Title }}</h3>
+                </a>
+            </div>
+        {{ end }}
+    </div>
+
+    <div class="pagination">
+        {{ if gt $paginator.TotalPages 1 }}
+            {{ range $paginator.Pagers }}
+                <a href="{{ .URL }}" class="{{ if .IsActive }}active{{ end }}">{{ .PageNumber }}</a>
+            {{ end }}
+        {{ end }}
+    </div>
+
+    <a href="/" class="volver">← Volver a la página principal</a>
+{{ end }}
